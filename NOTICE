@@ -1,0 +1,9 @@
+Based on LeSTA by Ikhyeon Cho, Korea University.
+Upstream source: https://github.com/Ikhyeon-Cho/LeSTA
+Upstream revision: e5614b010966ab2b38dd7d30f090940fde40e079
+
+The original LeSTA paper is by Ikhyeon Cho and Woojin Chung
+(IEEE Robotics and Automation Letters, 2024, DOI 10.1109/LRA.2024.3376148).
+
+This distribution includes changes for ROS 2 Humble by ezthor. It is distributed
+under the Apache License, Version 2.0. See LICENSE and CITATION.cff.

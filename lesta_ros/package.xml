@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!-- Modified for LeSTA ROS 2 Humble: ament and ROS 2 runtime dependencies. -->
+<package format="3">
+  <name>lesta</name><version>0.1.0</version>
+  <description>LeSTA ROS 2 Humble runtime.</description>
+  <maintainer email="97933067+ezthor@users.noreply.github.com">ezthor</maintainer>
+  <author email="tre0430@korea.ac.kr">Ikhyeon Cho</author>
+  <license>Apache-2.0</license><buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>rclcpp</depend><depend>sensor_msgs</depend><depend>geometry_msgs</depend>
+  <depend>grid_map_core</depend><depend>grid_map_ros</depend><depend>grid_map_msgs</depend>
+  <depend>tf2_ros</depend><depend>tf2_eigen</depend><depend>pcl_conversions</depend>
+  <depend>visualization_msgs</depend><depend>height_mapping_core</depend>
+  <depend>lesta_interfaces</depend><depend>libpcl-all-dev</depend>
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ros2launch</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

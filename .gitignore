@@ -1,0 +1,31 @@
+.vscode/**
+# Ignore egg-info directories
+*.egg-info/
+*.egg-info
+
+# Ignore pycache directories
+__pycache__/
+
+# Ignore libs directory
+libs/
+
+# Ignore CSV files
+*.csv
+
+# Ignore pcd files
+*.pcd
+
+# Ignore rosbag files
+*.bag
+
+# Ignore model files
+*.pth
+*.pt
+
+# ROS 2 builds and recorded data
+/build/
+/install/
+/log/
+*.mcap
+*.db3
+.venv/

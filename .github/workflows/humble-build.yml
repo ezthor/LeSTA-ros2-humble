@@ -1,0 +1,47 @@
+name: ROS 2 Humble source build
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: humble-build-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    container: ros:humble-ros-base
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y build-essential python3-colcon-common-extensions libpcl-dev libeigen3-dev wget unzip
+          apt-get install -y ros-humble-grid-map-core ros-humble-grid-map-ros ros-humble-grid-map-msgs ros-humble-tf2-eigen ros-humble-pcl-conversions ros-humble-ros2launch
+          wget -q https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-2.6.0%2Bcpu.zip -O /tmp/libtorch.zip
+          unzip -q /tmp/libtorch.zip -d /opt
+      - name: Build ROS2 packages
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          export CMAKE_PREFIX_PATH="/opt/libtorch:${CMAKE_PREFIX_PATH}"
+          colcon build --base-paths height_mapping/height_mapping_core lesta_interfaces lesta_ros --event-handlers console_direct+ --cmake-args -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="/opt/libtorch"
+      - name: Runtime smoke (labels, prediction and mapping)
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          source install/setup.bash
+          export LD_LIBRARY_PATH="/opt/libtorch/lib:${LD_LIBRARY_PATH:-}"
+          c++ -std=c++17 tests/make_smoke_model.cpp \
+            -I/opt/libtorch/include -I/opt/libtorch/include/torch/csrc/api/include \
+            -L/opt/libtorch/lib -Wl,-rpath,/opt/libtorch/lib -ltorch -ltorch_cpu -lc10 \
+            -o /tmp/lesta-make-smoke-model
+          /tmp/lesta-make-smoke-model /tmp/lesta-smoke.pt
+          python3 tests/ros2_smoke.py --model /tmp/lesta-smoke.pt
+      - name: Python syntax check
+        run: python3 -m compileall -q pylesta lesta_ros/launch tests

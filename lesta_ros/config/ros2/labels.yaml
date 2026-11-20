@@ -1,0 +1,26 @@
+/**:
+  ros__parameters:
+    mode: labels
+    map_frame: map
+    robot_frame: base_link
+    lidarscan_topic: /velodyne/points
+    map_length_x: 200.0
+    map_length_y: 200.0
+    grid_resolution: 0.1
+    estimator_type: StatMean
+    min_height_threshold: -0.2
+    max_height_threshold: 1.5
+    pca_radius: 0.2
+    scan_filter_range: 6.0
+    map_publish_rate: 1.0
+    raycasting: true
+    model_path: ""
+    input_dimension: 4
+    feature_fields: [step, slope, roughness, curvature]
+    binary_threshold: 0.5
+    footprint_radius: 0.3
+    max_traversable_step: 0.2
+    use_log_odds_update: true
+    learning_rate: 0.7
+    prob_min: 0.05
+    prob_max: 0.95
